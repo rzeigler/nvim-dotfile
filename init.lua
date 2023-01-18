@@ -4,6 +4,7 @@ require('packer').startup(function(use)
   use 'EdenEast/nightfox.nvim'
   use 'sainnhe/edge'
 
+
   use 'feline-nvim/feline.nvim'
 
   use 'tpope/vim-eunuch'
@@ -23,6 +24,14 @@ require('packer').startup(function(use)
       vim.o.timeoutlen = 400
       require('which-key').setup{}
     end
+  }
+
+  use {
+    'folke/trouble.nvim',
+    config = function()
+      require('trouble').setup {
+      }
+    end,
   }
 
   use {
@@ -86,8 +95,10 @@ end)
 
 
 
+
 vim.g.mapleader = ','
-vim.cmd('colorscheme dawnfox')
+
+vim.cmd('colorscheme edge')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -96,6 +107,9 @@ vim.cmd('set completeopt=menu,menuone')
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>hx', ':nohl<CR>', opts)
 vim.keymap.set('n', '<leader>qx', ':cclose<CR>', opts)
+vim.keymap.set('n', '<leader>nw', '<cmd>:Explore<CR>', opts)
+vim.keymap.set('n', '<leader>nh', '<cmd>:Sexplore<CR>', opts)
+vim.keymap.set('n', '<leader>nv', '<cmd>:Vexplore<CR>', opts)
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
