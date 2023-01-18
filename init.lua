@@ -28,6 +28,7 @@ require('packer').startup(function(use)
 
   use {
     'folke/trouble.nvim',
+    requires = "kyazdani42/nvim-web-devicons",
     config = function()
       require('trouble').setup {
       }
@@ -127,7 +128,7 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 vim.keymap.set('n', '<space>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<space>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<space>sw', builtin.lsp_dynamic_workspace_symbols, opts)
-vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
+-- vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
 
 
 local cmp = require'cmp'
