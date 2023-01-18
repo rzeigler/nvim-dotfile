@@ -2,8 +2,12 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'EdenEast/nightfox.nvim'
+  use 'sainnhe/edge'
 
   use 'feline-nvim/feline.nvim'
+
+  use 'tpope/vim-eunuch'
+  use 'tpope/vim-vinegar'
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -24,6 +28,11 @@ require('packer').startup(function(use)
   use {
     'kylechui/nvim-surround',
     tag = '*',
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
   }
 
   use {
@@ -40,7 +49,11 @@ require('packer').startup(function(use)
       ts_update()
     end,
     config = function()
-      require('nvim-treesitter.configs').setup{}
+      require('nvim-treesitter.configs').setup{
+        highlight = {
+          enable = true
+        }
+      }
     end,
   }
 
@@ -52,17 +65,33 @@ require('packer').startup(function(use)
     end
   }
 
+  use {
+    'j-hui/fidget.nvim',
+    config = function() 
+      require('fidget').setup{}
+    end
+  }
+
   use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
 
   use 'mfussenegger/nvim-dap'
 
   use 'mfussenegger/nvim-jdtls'
 end)
 
+
+
 vim.g.mapleader = ','
-vim.cmd('colorscheme dayfox')
+vim.cmd('colorscheme dawnfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
+
+vim.cmd('set completeopt=menu,menuone')
 
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>hx', ':nohl<CR>', opts)
@@ -82,11 +111,55 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- LSP Telescope
 vim.keymap.set('n', '<space>fr', builtin.lsp_references, opts)
-vim.keymap.set('n', '<space>s', builtin.lsp_document_symbols, opts)
+vim.keymap.set('n', '<space>sd', builtin.lsp_document_symbols, opts)
+vim.keymap.set('n', '<space>sw', builtin.lsp_dynamic_workspace_symbols, opts)
 vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
 
 
+local cmp = require'cmp'
+
+cmp.setup({
+
+  mapping = {
+    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+    ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    })},
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    }, {
+      { name = 'buffer' },
+    })
+})
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 require('lspconfig')['tsserver'].setup { 
-  on_attach = require('my_lsp').on_attach
+  on_attach = require('my_lsp').on_attach,
+  capabilities = capabilities
 }
 
