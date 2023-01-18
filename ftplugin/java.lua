@@ -9,8 +9,10 @@ local config = {
     cmd = { 'jdtls' },
     root_dir = vim.fs.dirname(vim.fs.find({'.gradlew', '.git', 'mvnw'}, { upward = true })[1]),
     on_attach = function (client, bufnr)
+      local bufopts = { noremap = true, silent=true, buffer=bufnr }
       my_lsp.on_attach(client, bufnr)
       jdtls.setup_dap({})
+      vim.keymap.set('n', '<A-o>', require'jdtls'.organize_imports, bufopts)
     end,
     capabilities = capabilities
 }

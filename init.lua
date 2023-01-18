@@ -26,14 +26,15 @@ require('packer').startup(function(use)
     end
   }
 
-  use {
-    'folke/trouble.nvim',
-    requires = "kyazdani42/nvim-web-devicons",
-    config = function()
-      require('trouble').setup {
-      }
-    end,
-  }
+  -- This appears to be slow so I'm disabling it for now
+  -- use {
+  --   'folke/trouble.nvim',
+  --   requires = "kyazdani42/nvim-web-devicons",
+  --   config = function()
+  --     require('trouble').setup {
+  --     }
+  --   end,
+  -- }
 
   use {
     'kylechui/nvim-surround',
@@ -88,6 +89,8 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
+  use 'dcampos/nvim-snippy'
+  use 'dcampos/cmp-snippy'
 
   use 'mfussenegger/nvim-dap'
 
@@ -99,7 +102,7 @@ end)
 
 vim.g.mapleader = ','
 
-vim.cmd('colorscheme edge')
+vim.cmd('colorscheme duskfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -128,13 +131,24 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 vim.keymap.set('n', '<space>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<space>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<space>sw', builtin.lsp_dynamic_workspace_symbols, opts)
--- vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
+vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
 
+-- vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", opts)
+-- vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
+-- vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts)
+-- vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
+-- vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts)
+-- vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", opts)
+-- vim.keymap.set("n", "gI", "<cmd>TroubleToggle lsp_implementations<cr>", opts)
 
 local cmp = require'cmp'
 
 cmp.setup({
-
+  snippet = {
+    expand = function(args)
+      require('snippy').expand_snippet(args.body) -- For `snippy` users.
+    end,
+  },
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
     ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -153,7 +167,7 @@ cmp.setup({
     }, {
       { name = 'buffer' },
     })
-})
+  })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
