@@ -92,6 +92,8 @@ require('packer').startup(function(use)
   use 'dcampos/nvim-snippy'
   use 'dcampos/cmp-snippy'
 
+  use 'onsails/lspkind.nvim'
+
   use 'mfussenegger/nvim-dap'
 
   use 'mfussenegger/nvim-jdtls'
@@ -122,16 +124,16 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- Diagnostics
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 -- LSP Telescope
-vim.keymap.set('n', '<space>fr', builtin.lsp_references, opts)
-vim.keymap.set('n', '<space>sd', builtin.lsp_document_symbols, opts)
-vim.keymap.set('n', '<space>sw', builtin.lsp_dynamic_workspace_symbols, opts)
-vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
+vim.keymap.set('n', '<leader>>fr', builtin.lsp_references, opts)
+vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
+vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
+vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
 
 -- vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", opts)
 -- vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
@@ -142,8 +144,16 @@ vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
 -- vim.keymap.set("n", "gI", "<cmd>TroubleToggle lsp_implementations<cr>", opts)
 
 local cmp = require'cmp'
+local lspkind = require'lspkind'
 
 cmp.setup({
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+    })
+  },
   snippet = {
     expand = function(args)
       require('snippy').expand_snippet(args.body) -- For `snippy` users.
