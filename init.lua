@@ -1,10 +1,7 @@
 require('packer').startup(function(use) 
   use 'wbthomason/packer.nvim'
 
-  use 'EdenEast/nightfox.nvim'
-  use 'sainnhe/edge'
-
-
+  use 'lifepillar/vim-solarized8'
   use 'feline-nvim/feline.nvim'
 
   use 'tpope/vim-eunuch'
@@ -89,7 +86,24 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
-  use 'dcampos/nvim-snippy'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
+  use 'hrsh7th/cmp-nvim-lsp-document-symbol'
+  use { 
+    'dcampos/nvim-snippy',
+    config = function()
+      require('snippy').setup({
+        mappings = {
+          is = {
+            ['<Tab>'] = 'expand_or_advance',
+            ['<S-Tab>'] = 'previous',
+          },
+          nx = {
+            ['<leader>x'] = 'cut_text',
+          },
+        },
+      })
+    end
+  }
   use 'dcampos/cmp-snippy'
 
   use 'onsails/lspkind.nvim'
@@ -100,28 +114,35 @@ require('packer').startup(function(use)
 end)
 
 
-
-
 vim.g.mapleader = ','
 
-vim.cmd('colorscheme duskfox')
+vim.cmd('set termguicolors')
+vim.cmd('colorscheme solarized8')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
-vim.cmd('set completeopt=menu,menuone')
+vim.cmd('set completeopt=menu,menuone,noselect')
 
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>hx', ':nohl<CR>', opts)
 vim.keymap.set('n', '<leader>qx', ':cclose<CR>', opts)
+vim.keymap.set('n', '<leader>qn', ':cnext<CR>', opts);
+vim.keymap.set('n', '<leader>qp', ':cprev<CR>', opts);
+
+vim.keymap.set('n', '<leader>lx', ':lclose<CR>', opts)
+vim.keymap.set('n', '<leader>ln', ':lnext<CR>', opts);
+vim.keymap.set('n', '<leader>lp', ':lprev<CR>', opts);
+
 vim.keymap.set('n', '<leader>nw', '<cmd>:Explore<CR>', opts)
 vim.keymap.set('n', '<leader>nh', '<cmd>:Sexplore<CR>', opts)
 vim.keymap.set('n', '<leader>nv', '<cmd>:Vexplore<CR>', opts)
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
+vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
+vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
 
 -- Diagnostics
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
@@ -130,7 +151,7 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 -- LSP Telescope
-vim.keymap.set('n', '<leader>>fr', builtin.lsp_references, opts)
+vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
 vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
@@ -168,24 +189,25 @@ cmp.setup({
       { name = 'nvim_lsp' },
     }, {
       { name = 'buffer' },
+    }, {
+      { name = 'nvim_lsp_signature_help' }
     })
   })
 
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- I specifically do not like these, so...
+-- cmp.setup.cmdline('/', {
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+--
+-- cmp.setup.cmdline(':', {
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
