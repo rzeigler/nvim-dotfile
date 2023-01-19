@@ -133,15 +133,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 vim.keymap.set('n', '<leader>>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
-vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
-
--- vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", opts)
--- vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
--- vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts)
--- vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
--- vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts)
--- vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", opts)
--- vim.keymap.set("n", "gI", "<cmd>TroubleToggle lsp_implementations<cr>", opts)
+-- vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
 
 local cmp = require'cmp'
 local lspkind = require'lspkind'
