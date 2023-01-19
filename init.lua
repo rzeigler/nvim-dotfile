@@ -133,7 +133,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 vim.keymap.set('n', '<leader>>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
--- vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
+vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
 
 local cmp = require'cmp'
 local lspkind = require'lspkind'
