@@ -118,6 +118,8 @@ require('packer').startup(function(use)
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'hrsh7th/cmp-nvim-lsp-document-symbol'
+  use 'rcarriga/cmp-dap'
+
   use { 
     'dcampos/nvim-snippy',
     config = function()
@@ -166,7 +168,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme tokyonight')
+vim.cmd('colorscheme gruvbox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -208,12 +210,16 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
-vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
+vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
 
 local cmp = require'cmp'
 local lspkind = require'lspkind'
 
 cmp.setup({
+  enabled = function()
+    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        or require("cmp_dap").is_dap_buffer()
+  end,
   formatting = {
     format = lspkind.cmp_format({
       mode = 'symbol', -- show only symbol annotations
@@ -249,6 +255,12 @@ cmp.setup({
   })
 })
 
+require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+  sources = {
+    { name = "dap" },
+  },
+})
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('lspconfig')['tsserver'].setup { 
@@ -266,4 +278,10 @@ require('lspconfig')['pyright'].setup{
   capabilities = capabilities
 }
 
-vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, bufopts)
+vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
+vim.keymap.set('n', '<space>dr', require'dap'.continue, opts)
+vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
+vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
+vim.keymap.set('n', '<space>df', require'telescope'.extensions.dap.frames, opts)
+vim.keymap.set('n', '<space>dc', require'telescope'.extensions.dap.commands, opts)
+vim.keymap.set('n', '<space>db', require'telescope'.extensions.dap.list_breakpoints, opts)
