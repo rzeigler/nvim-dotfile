@@ -168,7 +168,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme nightfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -282,6 +282,6 @@ vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
 vim.keymap.set('n', '<space>dr', require'dap'.continue, opts)
 vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
 vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
-vim.keymap.set('n', '<space>df', require'telescope'.extensions.dap.frames, opts)
-vim.keymap.set('n', '<space>dc', require'telescope'.extensions.dap.commands, opts)
-vim.keymap.set('n', '<space>db', require'telescope'.extensions.dap.list_breakpoints, opts)
+vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
+vim.keymap.set('n', '<leader>dc', require'telescope'.extensions.dap.commands, opts)
+vim.keymap.set('n', '<leader>db', require'telescope'.extensions.dap.list_breakpoints, opts)
