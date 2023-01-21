@@ -2,7 +2,9 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'lifepillar/vim-solarized8'
-  use { "ellisonleao/gruvbox.nvim" }
+  use 'ellisonleao/gruvbox.nvim'
+  use 'folke/tokyonight.nvim'
+
   use 'feline-nvim/feline.nvim'
 
   use 'tpope/vim-eunuch'
@@ -41,8 +43,11 @@ require('packer').startup(function(use)
     end
   }
 
+  use { 'RRethy/nvim-treesitter-textsubjects' }
+
   use {
     'nvim-treesitter/nvim-treesitter',
+    require =  { 'RRethy/nvim-treesitter-textsubjects' },
     run = function() 
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
@@ -51,12 +56,21 @@ require('packer').startup(function(use)
       require('nvim-treesitter.configs').setup{
         highlight = {
           enable = true
+        },
+        textsubjects = {
+          enable = true,
+          prev_selection = ',',
+          keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-container-outer',
+            ['i;'] = 'textsubjects-container-inner'
+          }
         }
       }
     end
   }
 
-  use {"nvim-telescope/telescope-ui-select.nvim" }
+  use 'nvim-telescope/telescope-ui-select.nvim'
 
   use {
     "nvim-telescope/telescope.nvim", tag = "0.1.0",
@@ -69,9 +83,9 @@ require('packer').startup(function(use)
 
   use {
     'j-hui/fidget.nvim',
-    config = function() 
-      require('fidget').setup{}
-    end
+    -- config = function() 
+    --   require('fidget').setup{}
+    -- end
   }
 
   use 'neovim/nvim-lspconfig'
@@ -111,11 +125,11 @@ end)
 vim.g.mapleader = ','
 
 vim.o.background='dark'
-vim.cmd("colorscheme gruvbox")
-vim.cmd("set number")
-vim.cmd("set expandtab shiftwidth=2 tabstop=2")
+vim.cmd('colorscheme tokyonight')
+vim.cmd('set number')
+vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
-vim.cmd("set completeopt=menu,menuone,noselect")
+vim.cmd('set completeopt=menu,menuone,noselect')
 
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', opts)
@@ -201,5 +215,13 @@ require('lspconfig')['tsserver'].setup {
   capabilities = capabilities
 }
 
-require('lspconfig')['bashls'].setup{}
+require('lspconfig')['bashls'].setup{
+  on_attach = require('my_lsp').on_attach,
+  capabilities = capabilities
+}
+
+require('lspconfig')['pyright'].setup{
+  on_attach = require('my_lsp').on_attach,
+  capabilities = capabilities
+}
 
