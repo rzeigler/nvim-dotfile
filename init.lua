@@ -139,6 +139,12 @@ require('packer').startup(function(use)
   use 'onsails/lspkind.nvim'
 
   use 'mfussenegger/nvim-dap'
+  use { 
+    'theHamsta/nvim-dap-virtual-text',
+    config = function()
+      require('nvim-dap-virtual-text').setup()
+    end
+  }
 
   use { 
     'simrat39/rust-tools.nvim',
@@ -199,10 +205,10 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- LSP Telescope
-vim.keymap.set('n', '<space>fr', builtin.lsp_references, opts)
-vim.keymap.set('n', '<space>sd', builtin.lsp_document_symbols, opts)
-vim.keymap.set('n', '<space>sw', builtin.lsp_dynamic_workspace_symbols, opts)
-vim.keymap.set('n', '<space>d', builtin.diagnostics, opts)
+vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
+vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
+vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
+vim.keymap.set('n', '<leader>d', builtin.diagnostics, opts)
 
 local cmp = require'cmp'
 local lspkind = require'lspkind'
@@ -260,4 +266,4 @@ require('lspconfig')['pyright'].setup{
   capabilities = capabilities
 }
 
-vim.keymap.set('n', '<space>bx', require'dap'.toggle_breakpoint, bufopts)
+vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, bufopts)
