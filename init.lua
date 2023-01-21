@@ -89,13 +89,16 @@ require('packer').startup(function(use)
   }
 
   use 'nvim-telescope/telescope-ui-select.nvim'
+  use 'nvim-telescope/telescope-dap.nvim'
 
   use {
-    "nvim-telescope/telescope.nvim", tag = "0.1.0",
+    'nvim-telescope/telescope.nvim', tag = "0.1.0",
     requires = { {'nvim-lua/plenary.nvim'} },
     config = function()
-      require("telescope").setup {}
-      require("telescope").load_extension("ui-select")
+      local telescope = require('telescope')
+      require('telescope').setup {}
+      require('telescope').load_extension('ui-select')
+      require('telescope').load_extension('dap')
     end
   }
 
@@ -107,6 +110,7 @@ require('packer').startup(function(use)
   }
 
   use 'neovim/nvim-lspconfig'
+
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
@@ -136,6 +140,17 @@ require('packer').startup(function(use)
 
   use 'mfussenegger/nvim-dap'
 
+  use { 
+    'simrat39/rust-tools.nvim',
+    config = function()
+      local my_lsp = require('my_lsp')
+      require('rust-tools').setup({
+        server = {
+          on_attach = my_lsp.on_attach
+        }
+      })
+    end
+  }
 
   use 'mfussenegger/nvim-jdtls'
 end)
@@ -245,3 +260,4 @@ require('lspconfig')['pyright'].setup{
   capabilities = capabilities
 }
 
+vim.keymap.set('n', '<space>bx', require'dap'.toggle_breakpoint, bufopts)
