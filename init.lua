@@ -43,11 +43,13 @@ require('packer').startup(function(use)
     end
   }
 
-  use { 'RRethy/nvim-treesitter-textsubjects' }
+  use 'RRethy/nvim-treesitter-textsubjects'
+
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
 
   use {
     'nvim-treesitter/nvim-treesitter',
-    require =  { 'RRethy/nvim-treesitter-textsubjects' },
+    require =  { 'nvim-treesitter/nvim-treesitter-textobjects', 'RRethy/nvim-treesitter-textsubjects' },
     run = function() 
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
@@ -57,15 +59,31 @@ require('packer').startup(function(use)
         highlight = {
           enable = true
         },
-        textsubjects = {
-          enable = true,
-          prev_selection = ',',
-          keymaps = {
-            ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-container-outer',
-            ['i;'] = 'textsubjects-container-inner'
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              -- You can use the capture groups defined in textobjects.scm
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              -- You can optionally set descriptions to the mappings (used in the desc parameter of
+              -- nvim_buf_set_keymap) which plugins like which-key display
+              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+            }
           }
-        }
+        },
+        -- Doesn't support java, oh well.
+        -- textsubjects = {
+        --   enable = true,
+        --   prev_selection = ',',
+        --   keymaps = {
+        --     ['.'] = 'textsubjects-smart',
+        --     [';'] = 'textsubjects-container-outer',
+        --     ['i;'] = 'textsubjects-container-inner'
+        --   }
+        -- }
       }
     end
   }
@@ -83,9 +101,9 @@ require('packer').startup(function(use)
 
   use {
     'j-hui/fidget.nvim',
-    -- config = function() 
-    --   require('fidget').setup{}
-    -- end
+    config = function() 
+      require('fidget').setup{}
+    end
   }
 
   use 'neovim/nvim-lspconfig'
@@ -117,6 +135,7 @@ require('packer').startup(function(use)
   use 'onsails/lspkind.nvim'
 
   use 'mfussenegger/nvim-dap'
+
 
   use 'mfussenegger/nvim-jdtls'
 end)

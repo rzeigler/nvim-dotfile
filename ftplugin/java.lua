@@ -11,9 +11,14 @@ local config = {
     on_attach = function (client, bufnr)
       local bufopts = { noremap = true, silent=true, buffer=bufnr }
       my_lsp.on_attach(client, bufnr)
-      jdtls.setup_dap({})
       vim.keymap.set('n', '<A-o>', require'jdtls'.organize_imports, bufopts)
+      jdtls.setup_dap({})
     end,
-    capabilities = capabilities
+    capabilities = capabilities,
+    init_options = {
+      bundles = {
+        vim.fn.glob("$HOME/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
+      }
+    }
 }
 jdtls.start_or_attach(config)
