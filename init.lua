@@ -144,7 +144,7 @@ end)
 vim.g.mapleader = ','
 
 vim.o.background='dark'
-vim.cmd('colorscheme tokyonight')
+vim.cmd('colorscheme solarized8')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
