@@ -2,6 +2,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'folke/tokyonight.nvim'
+  use 'sainnhe/edge'
   use 'lifepillar/vim-solarized8'
 
   use 'feline-nvim/feline.nvim'
@@ -263,26 +264,27 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
 
--- Diagnostics
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
--- LSP Telescope
-vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
-vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
-vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
-vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
+  -- Diagnostics
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
-vim.keymap.set('n', '<space>dr', require'dap'.continue, opts)
-vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
-vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
-vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
-vim.keymap.set('n', '<leader>dc', require'telescope'.extensions.dap.commands, opts)
-vim.keymap.set('n', '<leader>db', require'telescope'.extensions.dap.list_breakpoints, opts)
+  -- LSP Telescope
+  vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
+  vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
+  vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
+  vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
 
+  vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
+  vim.keymap.set('n', '<space>dr', require'dap'.continue, opts)
+  vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
+  vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
+  vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
+  vim.keymap.set('n', '<leader>dc', require'telescope'.extensions.dap.commands, opts)
+  vim.keymap.set('n', '<leader>db', require'telescope'.extensions.dap.list_breakpoints, opts)
+  require'virtualtypes'.on_attach(client, bufnr)
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
