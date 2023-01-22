@@ -1,4 +1,4 @@
-require('packer').startup(function(use) 
+require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'folke/tokyonight.nvim'
@@ -11,14 +11,14 @@ require('packer').startup(function(use)
 
   use {
     'lewis6991/gitsigns.nvim',
-    config = function() 
+    config = function()
       require('gitsigns').setup{}
     end,
   }
 
   use {
     'folke/which-key.nvim',
-    config = function() 
+    config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 400
       require('which-key').setup{}
@@ -49,7 +49,7 @@ require('packer').startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     require =  { 'nvim-treesitter/nvim-treesitter-textobjects', 'RRethy/nvim-treesitter-textsubjects' },
-    run = function() 
+    run = function()
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
     end,
@@ -95,15 +95,15 @@ require('packer').startup(function(use)
     requires = { {'nvim-lua/plenary.nvim'} },
     config = function()
       local telescope = require('telescope')
-      require('telescope').setup {}
-      require('telescope').load_extension('ui-select')
-      require('telescope').load_extension('dap')
+      telescope.setup {}
+      telescope.load_extension('ui-select')
+      telescope.load_extension('dap')
     end
   }
 
   use {
     'j-hui/fidget.nvim',
-    config = function() 
+    config = function()
       require('fidget').setup{}
     end
   }
@@ -116,12 +116,76 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'hrsh7th/cmp-nvim-lsp-document-symbol'
   use 'rcarriga/cmp-dap'
+  use 'dcampos/cmp-snippy'
+  use 'onsails/lspkind.nvim'
+  use {
+    'hrsh7th/nvim-cmp',
+    require = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-nvim-lsp-document-symbol',
+      'rcarriga/cmp-dap',
+      'onsails/lspkind.nvim'
+    },
+    config = function()
+      local cmp = require'cmp'
+      local lspkind = require'lspkind'
+      cmp.setup({
+        enabled = function()
+          return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+          or require("cmp_dap").is_dap_buffer()
+        end,
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+          })
+        },
+        snippet = {
+          expand = function(args)
+            require('snippy').expand_snippet(args.body) -- For `snippy` users.
+          end
+        },
+        mapping = {
+          ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.close(),
+          ['<CR>'] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          })
+        },
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+        }, {
+          { name = 'buffer' },
+        }, {
+          { name = 'nvim_lsp_signature_help' }
+        })
+      })
 
-  use { 
+      require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+        sources = {
+          { name = "dap" },
+        },
+      })
+
+    end
+  }
+
+  use {
     'dcampos/nvim-snippy',
     config = function()
       require('snippy').setup({
@@ -137,19 +201,16 @@ require('packer').startup(function(use)
       })
     end
   }
-  use 'dcampos/cmp-snippy'
-
-  use 'onsails/lspkind.nvim'
 
   use 'mfussenegger/nvim-dap'
-  use { 
+  use {
     'theHamsta/nvim-dap-virtual-text',
     config = function()
-      require('nvim-dap-virtual-text').setup()
+      require('nvim-dap-virtual-text').setup({})
     end
   }
 
-  use { 
+  use {
     'simrat39/rust-tools.nvim',
     config = function()
       local my_lsp = require('my_lsp')
@@ -175,109 +236,44 @@ vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 vim.cmd('set completeopt=menu,menuone,noselect')
 
+local merge = require('util').merge
 local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', opts)
-vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', opts)
-vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', opts);
-vim.keymap.set('n', '<leader>qp', '<cmd>cprev<CR>', opts);
+vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', merge(opts, { desc = "Clear highlight" }))
+vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', merge(opts, { desc = "Close quickfix" }))
+vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', merge(opts, { desc = "Next quickfix" }));
+vim.keymap.set('n', '<leader>qp', '<cmd>cprev<CR>', merge(opts, { desc = "Pref quickfix" }));
 
-vim.keymap.set('n', '<leader>lx', '<cmd>lclose<CR>', opts)
-vim.keymap.set('n', '<leader>ln', '<cmd>lnext<CR>', opts);
-vim.keymap.set('n', '<leader>lp', '<cmd>lprev<CR>', opts);
+vim.keymap.set('n', '<leader>lx', '<cmd>lclose<CR>', merge(opts, { desc = "Close loclist" }))
+vim.keymap.set('n', '<leader>ln', '<cmd>lnext<CR>', merge(opts, { desc = "Next loclist loc" }));
+vim.keymap.set('n', '<leader>lp', '<cmd>lprev<CR>', merge(opts, { desc = "Prev loclist loc" }));
 
-vim.keymap.set('n', '<leader>nw', '<cmd>Explore<CR>', opts)
-vim.keymap.set('n', '<leader>nh', '<cmd>Sexplore<CR>', opts)
-vim.keymap.set('n', '<leader>nv', '<cmd>Vexplore<CR>', opts)
+vim.keymap.set('n', '<leader>nw', '<cmd>Explore<CR>', merge(opts, { desc = "Open file manager" }))
+vim.keymap.set('n', '<leader>nh', '<cmd>Sexplore<CR>', merge(opts, { desc = "Split file manager horizontal" }))
+vim.keymap.set('n', '<leader>nv', '<cmd>Vexplore<CR>', merge(opts, { desc = "Split file manager vertical" }))
 
-vim.keymap.set('n', '<leader>tc', '<cmd>tabnew', opts)
-vim.keymap.set('n', '<leader>tn', '<cmd>tabnext', opts)
-vim.keymap.set('n', '<leader>tp', '<cmd>tabprev', opts)
+vim.keymap.set('n', '<leader>tc', '<cmd>tabnew', merge(opts, { desc = "New tab" }))
+vim.keymap.set('n', '<leader>tn', '<cmd>tabnext', merge(opts, { desc = "Next tab" }))
+vim.keymap.set('n', '<leader>tp', '<cmd>tabprev', merge(opts, { desc = "Prev tab" }))
 
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
-vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
-vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
+vim.keymap.set('n', '<leader>ff', builtin.find_files, merge(opts, { desc = "Find files" }))
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, merge(opts, { desc = "Grep" }))
+vim.keymap.set('n', '<leader>fb', builtin.buffers, merge(opts, { desc = "Find buffer" }))
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, merge(opts, { desc = "Find help tags" }))
+vim.keymap.set('n', '<leader>fj', builtin.jumplist, merge(opts, { desc = "Find jumplist" }))
 
 -- Diagnostics
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, merge(opts, { desc = "Open diagnostic float" }))
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, merge(opts, { desc = "Next diagnostic" }))
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, merge(opts, { desc = "Prev diagnostic" }))
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, merge(opts, { desc = "Set loclist to diagnostics" }))
 
 -- LSP Telescope
-vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
+vim.keymap.set('n', '<leader>fr', builtin.lsp_references, merge(opts, { desc = "Telescope find references" }))
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
-
-local cmp = require'cmp'
-local lspkind = require'lspkind'
-
-cmp.setup({
-  enabled = function()
-    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-        or require("cmp_dap").is_dap_buffer()
-  end,
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol', -- show only symbol annotations
-      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-    })
-  },
-  snippet = {
-    expand = function(args)
-      require('snippy').expand_snippet(args.body) -- For `snippy` users.
-    end
-  },
-  mapping = {
-    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-    ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-    ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    })
-  },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-  }, {
-    { name = 'buffer' },
-  }, {
-    { name = 'nvim_lsp_signature_help' }
-  })
-})
-
-require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-  sources = {
-    { name = "dap" },
-  },
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require('lspconfig')['tsserver'].setup { 
-  on_attach = require('my_lsp').on_attach,
-  capabilities = capabilities
-}
-
-require('lspconfig')['bashls'].setup{
-  on_attach = require('my_lsp').on_attach,
-  capabilities = capabilities
-}
-
-require('lspconfig')['pyright'].setup{
-  on_attach = require('my_lsp').on_attach,
-  capabilities = capabilities
-}
 
 vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
 vim.keymap.set('n', '<space>dr', require'dap'.continue, opts)
@@ -286,3 +282,47 @@ vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
 vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
 vim.keymap.set('n', '<leader>dc', require'telescope'.extensions.dap.commands, opts)
 vim.keymap.set('n', '<leader>db', require'telescope'.extensions.dap.list_breakpoints, opts)
+
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local lspconfig = require('lspconfig')
+
+lspconfig.tsserver.setup {
+  on_attach = require('my_lsp').on_attach,
+  capabilities = capabilities
+}
+
+lspconfig.bashls.setup{
+  on_attach = require('my_lsp').on_attach,
+  capabilities = capabilities
+}
+
+lspconfig.pyright.setup{
+  on_attach = require('my_lsp').on_attach,
+  capabilities = capabilities
+}
+
+lspconfig.sumneko_lua.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+
