@@ -238,39 +238,39 @@ vim.cmd('set completeopt=menu,menuone,noselect')
 
 local merge = require('util').merge
 local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', merge(opts, { desc = "Clear highlight" }))
-vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', merge(opts, { desc = "Close quickfix" }))
-vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', merge(opts, { desc = "Next quickfix" }));
-vim.keymap.set('n', '<leader>qp', '<cmd>cprev<CR>', merge(opts, { desc = "Pref quickfix" }));
+vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', opts)
+vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', opts)
+vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', opts);
+vim.keymap.set('n', '<leader>qp', '<cmd>cprev<CR>', opts);
 
-vim.keymap.set('n', '<leader>lx', '<cmd>lclose<CR>', merge(opts, { desc = "Close loclist" }))
-vim.keymap.set('n', '<leader>ln', '<cmd>lnext<CR>', merge(opts, { desc = "Next loclist loc" }));
-vim.keymap.set('n', '<leader>lp', '<cmd>lprev<CR>', merge(opts, { desc = "Prev loclist loc" }));
+vim.keymap.set('n', '<leader>lx', '<cmd>lclose<CR>', opts)
+vim.keymap.set('n', '<leader>ln', '<cmd>lnext<CR>', opts);
+vim.keymap.set('n', '<leader>lp', '<cmd>lprev<CR>', opts);
 
-vim.keymap.set('n', '<leader>nw', '<cmd>Explore<CR>', merge(opts, { desc = "Open file manager" }))
-vim.keymap.set('n', '<leader>nh', '<cmd>Sexplore<CR>', merge(opts, { desc = "Split file manager horizontal" }))
-vim.keymap.set('n', '<leader>nv', '<cmd>Vexplore<CR>', merge(opts, { desc = "Split file manager vertical" }))
+vim.keymap.set('n', '<leader>nw', '<cmd>Explore<CR>', opts)
+vim.keymap.set('n', '<leader>nh', '<cmd>Sexplore<CR>', opts)
+vim.keymap.set('n', '<leader>nv', '<cmd>Vexplore<CR>', opts)
 
-vim.keymap.set('n', '<leader>tc', '<cmd>tabnew', merge(opts, { desc = "New tab" }))
-vim.keymap.set('n', '<leader>tn', '<cmd>tabnext', merge(opts, { desc = "Next tab" }))
-vim.keymap.set('n', '<leader>tp', '<cmd>tabprev', merge(opts, { desc = "Prev tab" }))
+vim.keymap.set('n', '<leader>tc', '<cmd>tabnew', opts)
+vim.keymap.set('n', '<leader>tn', '<cmd>tabnext', opts)
+vim.keymap.set('n', '<leader>tp', '<cmd>tabprev', opts)
 
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, merge(opts, { desc = "Find files" }))
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, merge(opts, { desc = "Grep" }))
-vim.keymap.set('n', '<leader>fb', builtin.buffers, merge(opts, { desc = "Find buffer" }))
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, merge(opts, { desc = "Find help tags" }))
-vim.keymap.set('n', '<leader>fj', builtin.jumplist, merge(opts, { desc = "Find jumplist" }))
+vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
+vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
+vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
 
 -- Diagnostics
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, merge(opts, { desc = "Open diagnostic float" }))
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, merge(opts, { desc = "Next diagnostic" }))
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, merge(opts, { desc = "Prev diagnostic" }))
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, merge(opts, { desc = "Set loclist to diagnostics" }))
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- LSP Telescope
-vim.keymap.set('n', '<leader>fr', builtin.lsp_references, merge(opts, { desc = "Telescope find references" }))
+vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
