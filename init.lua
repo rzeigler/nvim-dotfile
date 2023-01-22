@@ -2,7 +2,6 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'folke/tokyonight.nvim'
-  use 'sainnhe/edge'
   use 'lifepillar/vim-solarized8'
 
   use 'feline-nvim/feline.nvim'
@@ -237,7 +236,6 @@ vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 vim.cmd('set completeopt=menu,menuone,noselect')
 
-local merge = require('util').merge
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', opts)
 vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', opts)
