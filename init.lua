@@ -293,7 +293,7 @@ vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
 
 vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
-vim.keymap.set('n', '<space>dr', require'dap'.continue, opts)
+vim.keymap.set('n', '<space>dc', require'dap'.continue, opts)
 vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
 vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
 vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
