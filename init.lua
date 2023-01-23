@@ -8,6 +8,8 @@ require('packer').startup(function(use)
     end
   }
 
+  use 'godlygeek/tabular'
+
   use 'ixru/nvim-markdown'
   use {
     "iamcco/markdown-preview.nvim",
