@@ -266,8 +266,6 @@ vim.keymap.set('n', '<leader>nh', '<cmd>Sexplore<CR>', opts)
 vim.keymap.set('n', '<leader>nv', '<cmd>Vexplore<CR>', opts)
 
 vim.keymap.set('n', '<leader>tc', '<cmd>tabnew<cr>', opts)
-vim.keymap.set('n', '<leader>tn', '<cmd>tabnext<cr>', opts)
-vim.keymap.set('n', '<leader>tp', '<cmd>tabprev<cr>', opts)
 
 
 local builtin = require('telescope.builtin')
