@@ -8,6 +8,12 @@ require('packer').startup(function(use)
     end
   }
 
+  use 'ixru/nvim-markdown'
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  }
+
   use 'feline-nvim/feline.nvim'
 
   use 'tpope/vim-eunuch'
