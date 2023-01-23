@@ -10,10 +10,13 @@ require('packer').startup(function(use)
   use 'tpope/vim-vinegar'
 
   use {
-    'lewis6991/gitsigns.nvim',
+    'tanvirtin/vgit.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
     config = function()
-      require('gitsigns').setup{}
-    end,
+      require('vgit').setup()
+    end
   }
 
   use {
@@ -230,7 +233,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme tokyonight-storm')
+vim.cmd('colorscheme edge')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -268,6 +271,10 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+-- Git
+vim.keymap.set('n', '[h', require'vgit'.hunk_up, opts)
+vim.keymap.set('n', ']h', require'vgit'.hunk_down, opts)
 
 -- LSP Telescope
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
