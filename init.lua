@@ -285,8 +285,8 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Git
-vim.keymap.set('n', '[h', require'vgit'.hunk_up, opts)
-vim.keymap.set('n', ']h', require'vgit'.hunk_down, opts)
+vim.keymap.set('n', '[gh', require'vgit'.hunk_up, opts)
+vim.keymap.set('n', ']gh', require'vgit'.hunk_down, opts)
 
 -- LSP Telescope
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
