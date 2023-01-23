@@ -1,8 +1,12 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'folke/tokyonight.nvim'
-  use 'sainnhe/edge'
+  use {
+    'ellisonleao/gruvbox.nvim',
+    config = function()
+      require('gruvbox').setup({})
+    end
+  }
 
   use 'feline-nvim/feline.nvim'
 
@@ -233,7 +237,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme edge')
+vim.cmd('colorscheme gruvbox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
