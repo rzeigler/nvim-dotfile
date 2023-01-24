@@ -1,12 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use {
-    'ellisonleao/gruvbox.nvim',
-    config = function()
-      require('gruvbox').setup({})
-    end
-  }
+  use 'EdenEast/nightfox.nvim'
 
   use 'godlygeek/tabular'
 
@@ -239,7 +234,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme nightfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
