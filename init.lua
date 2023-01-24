@@ -16,7 +16,13 @@ require('packer').startup(function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
   }
 
-  use 'feline-nvim/feline.nvim'
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup({})
+    end
+  }
 
   use 'tpope/vim-eunuch'
   use 'tpope/vim-vinegar'
@@ -115,13 +121,7 @@ require('packer').startup(function(use)
       telescope.load_extension('dap')
     end
   }
-
-  use {
-    'j-hui/fidget.nvim',
-    config = function()
-      require('fidget').setup{}
-    end
-  }
+  
 
   use 'neovim/nvim-lspconfig'
 
@@ -218,12 +218,6 @@ require('packer').startup(function(use)
   }
 
   use 'mfussenegger/nvim-dap'
-  use {
-    'theHamsta/nvim-dap-virtual-text',
-    config = function()
-      require('nvim-dap-virtual-text').setup({})
-    end
-  }
 
   use {
     'simrat39/rust-tools.nvim',
