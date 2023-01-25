@@ -1,8 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'sainnhe/sonokai'
-
+  use 'EdenEast/nightfox.nvim'
   use 'godlygeek/tabular'
 
   use 'ixru/nvim-markdown'
@@ -17,20 +16,8 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     requires = {{ 'kyazdani42/nvim-web-devicons' },
-                { 'arkav/lualine-lsp-progress' },
-                { 'sainnhe/sonokai' } },
+                { 'arkav/lualine-lsp-progress' } },
     config = function()
-      require('lualine').setup({
-        options = {
-          theme = 'sonokai'
-        },
-        sections = {
-          lualine_c = {
-            'filename',
-            'lsp_progress'
-          }
-        }
-      })
     end
   }
 
@@ -250,9 +237,21 @@ vim.g.sonokai_style = 'andromeda'
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme sonokai')
+vim.cmd('colorscheme nightfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
+
+require('lualine').setup({
+  options = {
+    theme = 'tokyonight'
+  },
+  sections = {
+    lualine_c = {
+      'filename',
+      'lsp_progress'
+    }
+  }
+})
 
 vim.cmd('set completeopt=menu,menuone,noselect')
 
