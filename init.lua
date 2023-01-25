@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'EdenEast/nightfox.nvim'
+  use 'folke/tokyonight.nvim'
 
   use 'godlygeek/tabular'
 
@@ -11,11 +11,22 @@ require('packer').startup(function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
   }
 
+  use 'arkav/lualine-lsp-progress'
+  use 'kyazdani42/nvim-web-devicons' 
+
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    requires = {{ 'kyazdani42/nvim-web-devicons' },
+                {  'arkav/lualine-lsp-progress'} },
     config = function()
-      require('lualine').setup({})
+      require('lualine').setup({
+        sections = {
+          lualine_c = {
+            'filename',
+            'lsp_progress'
+          }
+        }
+      })
     end
   }
 
@@ -234,7 +245,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme nightfox')
+vim.cmd('colorscheme tokyonight-storm')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -309,26 +320,26 @@ lspconfig.pyright.setup{
   capabilities = capabilities
 }
 
-lspconfig.sumneko_lua.setup {
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
+-- lspconfig.sumneko_lua.setup {
+--   settings = {
+--     Lua = {
+--       runtime = {
+--         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--         version = 'LuaJIT',
+--       },
+--       diagnostics = {
+--         -- Get the language server to recognize the `vim` global
+--         globals = {'vim'},
+--       },
+--       workspace = {
+--         -- Make the server aware of Neovim runtime files
+--         library = vim.api.nvim_get_runtime_file("", true),
+--       },
+--       -- Do not send telemetry data containing a randomized but unique identifier
+--       telemetry = {
+--         enable = false,
+--       },
+--     },
+--   },
+-- }
+--
