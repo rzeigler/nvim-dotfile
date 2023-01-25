@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'folke/tokyonight.nvim'
+  use 'sainnhe/sonokai'
 
   use 'godlygeek/tabular'
 
@@ -17,9 +17,13 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     requires = {{ 'kyazdani42/nvim-web-devicons' },
-                {  'arkav/lualine-lsp-progress'} },
+                { 'arkav/lualine-lsp-progress' },
+                { 'sainnhe/sonokai' } },
     config = function()
       require('lualine').setup({
+        options = {
+          theme = 'sonokai'
+        },
         sections = {
           lualine_c = {
             'filename',
@@ -242,10 +246,11 @@ end)
 
 
 vim.g.mapleader = ','
+vim.g.sonokai_style = 'andromeda'
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme tokyonight-storm')
+vim.cmd('colorscheme sonokai')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -294,6 +299,7 @@ vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
 
 vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
 vim.keymap.set('n', '<space>dc', require'dap'.continue, opts)
+vim.keymap.set('n', '<space>dt', require'dap'.terminate, opts)
 vim.keymap.set('n', '<space>dr', require'dap'.repl.toggle, opts)
 vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
 vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
