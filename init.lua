@@ -280,7 +280,7 @@ end)
 
 vim.g.mapleader = ','
 
-vim.o.background='light'
+vim.o.background='dark'
 vim.cmd('set termguicolors')
 vim.cmd('colorscheme edge')
 vim.cmd('set number')
