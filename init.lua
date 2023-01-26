@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use { "ellisonleao/gruvbox.nvim" }
+  use 'sainnhe/edge'
 
   use 'godlygeek/tabular'
 
@@ -243,17 +243,16 @@ end)
 
 
 vim.g.mapleader = ','
-vim.g.sonokai_style = 'andromeda'
 
-vim.o.background='dark'
+vim.o.background='light'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme edge')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 require('lualine').setup({
   options = {
-    theme = 'gruvbox'
+    theme = 'edge'
   },
   sections = {
     lualine_c = {
