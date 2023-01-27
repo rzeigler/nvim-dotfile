@@ -1,8 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'sainnhe/edge'
-  use 'sainnhe/everforest'
+  use 'sainnhe/sonokai'
 
   use 'godlygeek/tabular'
 
@@ -286,15 +285,16 @@ end)
 
 vim.g.mapleader = ','
 
+vim.g.sonokai_style = 'andromeda'
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme everforest')
+vim.cmd('colorscheme sonokai')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 require('lualine').setup({
   options = {
-    theme = 'everforest'
+    theme = 'sonokai'
   },
   sections = {
     lualine_c = {
