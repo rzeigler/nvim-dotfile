@@ -2,6 +2,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'sainnhe/edge'
+  use 'sainnhe/everforest'
 
   use 'godlygeek/tabular'
 
@@ -144,7 +145,12 @@ require('packer').startup(function(use)
 
   use 'nvim-telescope/telescope-ui-select.nvim'
   use 'nvim-telescope/telescope-dap.nvim'
-  use 'nvim-telescope/telescope-fzy-native.nvim'
+  use {
+    'nvim-telescope/telescope-fzy-native.nvim',
+    config = function()
+      require'telescope'.load_extension('fzy_native')
+    end
+  }
 
   use {
     "nvim-telescope/telescope-frecency.nvim",
@@ -282,13 +288,13 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme edge')
+vim.cmd('colorscheme everforest')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 require('lualine').setup({
   options = {
-    theme = 'edge'
+    theme = 'everforest'
   },
   sections = {
     lualine_c = {
