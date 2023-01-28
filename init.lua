@@ -1,6 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
+  use 'EdenEast/nightfox.nvim'
   use 'phha/zenburn.nvim'
 
   use 'godlygeek/tabular'
@@ -287,15 +288,11 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
--- vim.cmd('colorscheme zenburn')
-require('zenburn').setup()
+vim.cmd('colorscheme nightfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 require('lualine').setup({
-  options = {
-    theme = 'zenburn'
-  },
   sections = {
     lualine_c = {
       'filename',
