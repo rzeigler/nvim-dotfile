@@ -23,6 +23,15 @@ require('packer').startup(function(use)
     end
   }
 
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup {}
+    end
+  }
+
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
   use 'tpope/vim-eunuch'
   use 'tpope/vim-vinegar'
 
@@ -240,12 +249,14 @@ require('packer').startup(function(use)
         })
       })
 
-      require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+      cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
         sources = {
           { name = "dap" },
         },
       })
 
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      cmp.event:on('config_done', cmp_autopairs.on_confirm_done())
     end
   }
 
@@ -267,6 +278,13 @@ require('packer').startup(function(use)
   }
 
   use 'mfussenegger/nvim-dap'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use {
+    'mfussenegger/nvim-dap-python',
+    config = function()
+      require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    end
+  }
 
   use {
     'simrat39/rust-tools.nvim',
@@ -346,6 +364,9 @@ vim.keymap.set('n', '<space>dt', require'dap'.terminate, opts)
 vim.keymap.set('n', '<space>dr', require'dap'.repl.toggle, opts)
 vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
 vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
+vim.keymap.set('n', '<space>dfj', require'dap'.focus_frame, opts)
+vim.keymap.set('n', '<space>dfu', require'dap'.up, opts)
+vim.keymap.set('n', '<space>dfd', require'dap'.down, opts)
 vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
 vim.keymap.set('n', '<leader>dc', require'telescope'.extensions.dap.commands, opts)
 vim.keymap.set('n', '<leader>db', require'telescope'.extensions.dap.list_breakpoints, opts)
