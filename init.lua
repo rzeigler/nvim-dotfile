@@ -1,8 +1,8 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'EdenEast/nightfox.nvim'
-  use 'phha/zenburn.nvim'
+  use 'ellisonleao/gruvbox.nvim'
+  use 'lifepillar/vim-solarized8'
 
   use 'godlygeek/tabular'
 
@@ -18,7 +18,7 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     requires = {{ 'kyazdani42/nvim-web-devicons' },
-                { 'arkav/lualine-lsp-progress' } },
+    { 'arkav/lualine-lsp-progress' } },
     config = function()
     end
   }
@@ -82,10 +82,18 @@ require('packer').startup(function(use)
   }
 
   use {
+    "jcdickinson/wpm.nvim",
+    config = function()
+      require("wpm").setup({
+      })
+    end
+  }
+
+  use {
     'folke/which-key.nvim',
     config = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 400
+      vim.o.timeoutlen = 1000
       require('which-key').setup{}
     end
   }
@@ -140,181 +148,187 @@ require('packer').startup(function(use)
         },
         -- Doesn't support java, oh well.
         -- textsubjects = {
-        --   enable = true,
-        --   prev_selection = ',',
-        --   keymaps = {
-        --     ['.'] = 'textsubjects-smart',
-        --     [';'] = 'textsubjects-container-outer',
-        --     ['i;'] = 'textsubjects-container-inner'
-        --   }
-        -- }
+          --   enable = true,
+          --   prev_selection = ',',
+          --   keymaps = {
+            --     ['.'] = 'textsubjects-smart',
+            --     [';'] = 'textsubjects-container-outer',
+            --     ['i;'] = 'textsubjects-container-inner'
+            --   }
+            -- }
+          }
+        end
       }
-    end
-  }
 
-  use 'nvim-telescope/telescope-ui-select.nvim'
-  use 'nvim-telescope/telescope-dap.nvim'
-  use {
-    'nvim-telescope/telescope-fzy-native.nvim',
-    config = function()
-      require'telescope'.load_extension('fzy_native')
-    end
-  }
+      use 'nvim-telescope/telescope-ui-select.nvim'
+      use 'nvim-telescope/telescope-dap.nvim'
+      use {
+        'nvim-telescope/telescope-fzy-native.nvim',
+        config = function()
+          require'telescope'.load_extension('fzy_native')
+        end
+      }
 
-  use {
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require"telescope".load_extension("frecency")
-    end,
-    requires = {"kkharji/sqlite.lua"}
-  }
-
-  use {
-    'nvim-telescope/telescope.nvim', tag = "0.1.0",
-    requires = { {'nvim-lua/plenary.nvim'} },
-    config = function()
-      local telescope = require('telescope')
-      telescope.setup {}
-      telescope.load_extension('ui-select')
-      telescope.load_extension('dap')
-    end
-  }
-  
-
-  use 'neovim/nvim-lspconfig'
-
-  use 'jubnzv/virtual-types.nvim'
-
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/cmp-nvim-lsp-signature-help'
-  use 'hrsh7th/cmp-nvim-lsp-document-symbol'
-  use 'rcarriga/cmp-dap'
-  use 'dcampos/cmp-snippy'
-  use 'onsails/lspkind.nvim'
-  use {
-    'hrsh7th/nvim-cmp',
-    require = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
-      'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'rcarriga/cmp-dap',
-      'onsails/lspkind.nvim'
-    },
-    config = function()
-      local cmp = require'cmp'
-      local lspkind = require'lspkind'
-      cmp.setup({
-        enabled = function()
-          return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-          or require("cmp_dap").is_dap_buffer()
+      use {
+        "nvim-telescope/telescope-frecency.nvim",
+        config = function()
+          require"telescope".load_extension("frecency")
         end,
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = 'symbol', -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+        requires = {"kkharji/sqlite.lua"}
+      }
+
+      use {
+        'nvim-telescope/telescope.nvim', tag = "0.1.0",
+        requires = { {'nvim-lua/plenary.nvim'} },
+        config = function()
+          local telescope = require('telescope')
+          telescope.setup {}
+          telescope.load_extension('ui-select')
+          telescope.load_extension('dap')
+        end
+      }
+
+
+      use 'neovim/nvim-lspconfig'
+
+      use 'jubnzv/virtual-types.nvim'
+
+      use 'hrsh7th/cmp-nvim-lsp'
+      use 'hrsh7th/cmp-buffer'
+      use 'hrsh7th/cmp-path'
+      use 'hrsh7th/cmp-cmdline'
+      use 'hrsh7th/cmp-nvim-lsp-signature-help'
+      use 'hrsh7th/cmp-nvim-lsp-document-symbol'
+      use 'rcarriga/cmp-dap'
+      use 'dcampos/cmp-snippy'
+      use 'onsails/lspkind.nvim'
+      use {
+        'hrsh7th/nvim-cmp',
+        require = {
+          'hrsh7th/cmp-nvim-lsp',
+          'hrsh7th/cmp-buffer',
+          'hrsh7th/cmp-path',
+          'hrsh7th/cmp-cmdline',
+          'hrsh7th/cmp-nvim-lsp-signature-help',
+          'hrsh7th/cmp-nvim-lsp-document-symbol',
+          'rcarriga/cmp-dap',
+          'onsails/lspkind.nvim'
+        },
+        config = function()
+          local cmp = require'cmp'
+          local lspkind = require'lspkind'
+          cmp.setup({
+            enabled = function()
+              return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+              or require("cmp_dap").is_dap_buffer()
+            end,
+            formatting = {
+              format = lspkind.cmp_format({
+                mode = 'symbol', -- show only symbol annotations
+                maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+              })
+            },
+            snippet = {
+              expand = function(args)
+                require('snippy').expand_snippet(args.body) -- For `snippy` users.
+              end
+            },
+            mapping = {
+              ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+              ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+              ['<C-f>'] = cmp.mapping.scroll_docs(4),
+              ['<C-Space>'] = cmp.mapping.complete(),
+              ['<C-e>'] = cmp.mapping.close(),
+              ['<CR>'] = cmp.mapping.confirm({
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+              })
+            },
+            sources = cmp.config.sources({
+              { name = 'nvim_lsp' },
+            }, {
+              { name = 'buffer' },
+            }, {
+              { name = 'nvim_lsp_signature_help' }
+            })
           })
-        },
-        snippet = {
-          expand = function(args)
-            require('snippy').expand_snippet(args.body) -- For `snippy` users.
-          end
-        },
-        mapping = {
-          ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.close(),
-          ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+
+          cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+            sources = {
+              { name = "dap" },
+            },
           })
-        },
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-        }, {
-          { name = 'buffer' },
-        }, {
-          { name = 'nvim_lsp_signature_help' }
-        })
-      })
 
-      cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-        sources = {
-          { name = "dap" },
-        },
-      })
+          local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+          cmp.event:on('config_done', cmp_autopairs.on_confirm_done())
+        end
+      }
 
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      cmp.event:on('config_done', cmp_autopairs.on_confirm_done())
-    end
-  }
+      use {
+        'dcampos/nvim-snippy',
+        config = function()
+          require('snippy').setup({
+            mappings = {
+              is = {
+                ['<Tab>'] = 'expand_or_advance',
+                ['<S-Tab>'] = 'previous',
+              },
+              nx = {
+                ['<leader>x'] = 'cut_text',
+              },
+            },
+          })
+        end
+      }
 
-  use {
-    'dcampos/nvim-snippy',
-    config = function()
-      require('snippy').setup({
-        mappings = {
-          is = {
-            ['<Tab>'] = 'expand_or_advance',
-            ['<S-Tab>'] = 'previous',
-          },
-          nx = {
-            ['<leader>x'] = 'cut_text',
-          },
-        },
-      })
-    end
-  }
+      use 'mfussenegger/nvim-dap'
+      use 'theHamsta/nvim-dap-virtual-text'
+      use {
+        'mfussenegger/nvim-dap-python',
+        config = function()
+          require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+        end
+      }
 
-  use 'mfussenegger/nvim-dap'
-  use 'theHamsta/nvim-dap-virtual-text'
-  use {
-    'mfussenegger/nvim-dap-python',
-    config = function()
-      require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-    end
-  }
+      use {
+        'simrat39/rust-tools.nvim',
+        config = function()
+          local my_lsp = require('my_lsp')
+          require('rust-tools').setup({
+            server = {
+              on_attach = my_lsp.on_attach
+            }
+          })
+        end
+      }
 
-  use {
-    'simrat39/rust-tools.nvim',
-    config = function()
-      local my_lsp = require('my_lsp')
-      require('rust-tools').setup({
-        server = {
-          on_attach = my_lsp.on_attach
-        }
-      })
-    end
-  }
-
-  use 'mfussenegger/nvim-jdtls'
-end)
+      use 'mfussenegger/nvim-jdtls'
+    end)
 
 
 vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme nightfox')
+vim.cmd('colorscheme gruvbox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
+local wpm = require'wpm'
+
 require('lualine').setup({
+  options = {
+    theme = 'gruvbox'
+  },
   sections = {
     lualine_c = {
       'filename',
-      'lsp_progress'
+      wpm.historic_graph,
+      wpm.wpm,
     }
   }
 })
