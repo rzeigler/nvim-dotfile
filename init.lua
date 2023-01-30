@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'ellisonleao/gruvbox.nvim'
+  use 'EdenEast/nightfox.nvim'
 
   use 'godlygeek/tabular'
 
@@ -318,7 +318,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme duskfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -326,7 +326,7 @@ local wpm = require'wpm'
 
 require('lualine').setup({
   options = {
-    theme = 'gruvbox'
+    theme = 'nightfox'
   },
   sections = {
     lualine_c = {
