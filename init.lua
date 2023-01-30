@@ -2,7 +2,6 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'ellisonleao/gruvbox.nvim'
-  use 'lifepillar/vim-solarized8'
 
   use 'godlygeek/tabular'
 
@@ -286,7 +285,12 @@ require('packer').startup(function(use)
       }
 
       use 'mfussenegger/nvim-dap'
-      use 'theHamsta/nvim-dap-virtual-text'
+      use {
+        'theHamsta/nvim-dap-virtual-text',
+        config = function()
+          require("nvim-dap-virtual-text").setup({})
+        end
+      }
       use {
         'mfussenegger/nvim-dap-python',
         config = function()
@@ -366,21 +370,27 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
+
+vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
+vim.keymap.set('n', '<space>bc', require'dap'.clear_breakpoints, opts)
+vim.keymap.set('n', '<space>dc', require'dap'.continue, opts)
+vim.keymap.set('n', '<space>dt', require'dap'.terminate, opts)
+vim.keymap.set('n', '<space>dl', require'dap'.run_last, opts)
+vim.keymap.set('n', '<space>dr', require'dap'.repl.toggle, opts)
+vim.keymap.set('n', '<space>sf', require'dap'.step_over, opts)
+vim.keymap.set('n', '<space>si', require'dap'.step_into, opts)
+vim.keymap.set('n', '<space>so', require'dap'.step_out, opts)
+
+vim.keymap.set('n', '<space>fj', require'dap'.focus_frame, opts)
+vim.keymap.set('n', '<space>fu', require'dap'.up, opts)
+vim.keymap.set('n', '<space>fd', require'dap'.down, opts)
+
 -- LSP Telescope
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, opts)
 vim.keymap.set('n', '<leader>sd', builtin.lsp_document_symbols, opts)
 vim.keymap.set('n', '<leader>sw', builtin.lsp_dynamic_workspace_symbols, opts)
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, opts)
 
-vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
-vim.keymap.set('n', '<space>dc', require'dap'.continue, opts)
-vim.keymap.set('n', '<space>dt', require'dap'.terminate, opts)
-vim.keymap.set('n', '<space>dr', require'dap'.repl.toggle, opts)
-vim.keymap.set('n', '<space>dso', require'dap'.step_over, opts)
-vim.keymap.set('n', '<space>dsi', require'dap'.step_into, opts)
-vim.keymap.set('n', '<space>dfj', require'dap'.focus_frame, opts)
-vim.keymap.set('n', '<space>dfu', require'dap'.up, opts)
-vim.keymap.set('n', '<space>dfd', require'dap'.down, opts)
 vim.keymap.set('n', '<leader>df', require'telescope'.extensions.dap.frames, opts)
 vim.keymap.set('n', '<leader>dc', require'telescope'.extensions.dap.commands, opts)
 vim.keymap.set('n', '<leader>db', require'telescope'.extensions.dap.list_breakpoints, opts)
