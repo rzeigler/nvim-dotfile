@@ -2,6 +2,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'EdenEast/nightfox.nvim'
+  use 'sainnhe/everforest'
 
   use 'godlygeek/tabular'
 
@@ -318,7 +319,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme duskfox')
+vim.cmd('colorscheme everforest')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -326,7 +327,7 @@ local wpm = require'wpm'
 
 require('lualine').setup({
   options = {
-    theme = 'nightfox'
+    theme = 'everforest'
   },
   sections = {
     lualine_c = {
