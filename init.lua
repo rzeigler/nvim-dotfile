@@ -1,25 +1,18 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'ellisonleao/gruvbox.nvim'
+  use 'savq/melange-nvim'
+
   use 'godlygeek/tabular'
 
-  use 'ixru/nvim-markdown'
   use {
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
-  }
-
-  use 'arkav/lualine-lsp-progress'
-  use 'kyazdani42/nvim-web-devicons' 
-
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = {{ 'kyazdani42/nvim-web-devicons' },
-    { 'arkav/lualine-lsp-progress' } },
+    'tversteeg/registers.nvim',
     config = function()
+      require('registers').setup({})
     end
   }
+
+  use 'kyazdani42/nvim-web-devicons'
 
   use {
     'windwp/nvim-autopairs',
@@ -31,7 +24,22 @@ require('packer').startup(function(use)
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
   use 'tpope/vim-eunuch'
-  use 'tpope/vim-vinegar'
+
+  use {
+    'SidOfc/carbon.nvim',
+    config = function()
+      require'carbon'.setup({
+        keep_netrw = false
+      })
+    end
+  }
+
+  use 'ixru/nvim-markdown'
+
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  }
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -80,23 +88,6 @@ require('packer').startup(function(use)
   }
 
   use {
-    "jcdickinson/wpm.nvim",
-    config = function()
-      require("wpm").setup({
-      })
-    end
-  }
-
-  use {
-    'folke/which-key.nvim',
-    config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 1000
-      require('which-key').setup{}
-    end
-  }
-
-  use {
     'kylechui/nvim-surround',
     tag = '*',
     config = function()
@@ -106,6 +97,23 @@ require('packer').startup(function(use)
     end
   }
 
+  use {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require'lualine'.setup {
+        sections = {
+          lualine_c = {
+            {
+              'filename',
+              file_status = true,
+              newfile_status = true,
+              path = 1,
+            }
+          }
+        }
+      }
+    end
+  }
   use {
     'numToStr/Comment.nvim',
     config = function()
@@ -317,24 +325,9 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme melange')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
-
-local wpm = require'wpm'
-
-require('lualine').setup({
-  options = {
-    theme = 'gruvbox'
-  },
-  sections = {
-    lualine_c = {
-      'filename',
-      wpm.historic_graph,
-      wpm.wpm,
-    }
-  }
-})
 
 vim.cmd('set completeopt=menu,menuone,noselect')
 
