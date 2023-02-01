@@ -214,8 +214,6 @@ require('packer').startup(function(use)
 
       use 'neovim/nvim-lspconfig'
 
-      use 'jubnzv/virtual-types.nvim'
-
       use 'hrsh7th/cmp-nvim-lsp'
       use 'hrsh7th/cmp-buffer'
       use 'hrsh7th/cmp-path'
@@ -335,18 +333,6 @@ require('packer').startup(function(use)
       }
 
       use 'mfussenegger/nvim-jdtls'
-
-      use {
-        'j-hui/fidget.nvim',
-        config = function()
-          require'fidget'.setup{
-            timer = {
-              fidget_decay = 200,
-              task_decay = 100
-            }
-          }
-        end
-      }
     end)
 
 
