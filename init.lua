@@ -166,8 +166,28 @@ require('packer').startup(function(use)
         end
       }
 
-      use 'nvim-telescope/telescope-ui-select.nvim'
-      use 'nvim-telescope/telescope-dap.nvim'
+      use {
+        'nvim-telescope/telescope.nvim', tag = "0.1.0",
+        requires = { {'nvim-lua/plenary.nvim'} },
+        config = function()
+          require'telescope'.setup {}
+        end
+      }
+      use {
+        'nvim-telescope/telescope-ui-select.nvim',
+        config = function()
+          require'telescope'.load_extension('ui-select')
+        end
+      }
+      use {
+        'nvim-telescope/telescope-dap.nvim',
+        config = function()
+          require'telescope'.load_extension('dap')
+        end
+      }
+      use {
+        'nvim-telescope/telescope-symbols.nvim',
+      }
       use {
         'nvim-telescope/telescope-fzy-native.nvim',
         config = function()
@@ -183,16 +203,6 @@ require('packer').startup(function(use)
         requires = {"kkharji/sqlite.lua"}
       }
 
-      use {
-        'nvim-telescope/telescope.nvim', tag = "0.1.0",
-        requires = { {'nvim-lua/plenary.nvim'} },
-        config = function()
-          local telescope = require('telescope')
-          telescope.setup {}
-          telescope.load_extension('ui-select')
-          telescope.load_extension('dap')
-        end
-      }
 
 
       use 'neovim/nvim-lspconfig'
@@ -354,6 +364,7 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
+vim.keymap.set('n', '<leader>fs', builtin.symbols, opts)
 
 
 -- Diagnostics
