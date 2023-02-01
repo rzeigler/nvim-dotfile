@@ -29,7 +29,8 @@ require('packer').startup(function(use)
     'SidOfc/carbon.nvim',
     config = function()
       require'carbon'.setup({
-        keep_netrw = false
+        keep_netrw = false,
+        auto_open = false
       })
     end
   }
@@ -334,6 +335,18 @@ require('packer').startup(function(use)
       }
 
       use 'mfussenegger/nvim-jdtls'
+
+      use {
+        'j-hui/fidget.nvim',
+        config = function()
+          require'fidget'.setup{
+            timer = {
+              fidget_decay = 200,
+              task_decay = 100
+            }
+          }
+        end
+      }
     end)
 
 
@@ -347,7 +360,9 @@ vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
 vim.cmd('set completeopt=menu,menuone,noselect')
 
+
 local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<leader>cf', '<cmd>FidgetClose<cr>', opts)
 vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', opts)
 vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', opts)
 vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', opts);
