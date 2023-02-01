@@ -202,6 +202,12 @@ require('packer').startup(function(use)
         end,
         requires = {"kkharji/sqlite.lua"}
       }
+      use {
+        'LinArcX/telescope-env.nvim',
+        config = function()
+          require'telescope'.load_extension('env')
+        end
+      }
 
 
 
