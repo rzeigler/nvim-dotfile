@@ -77,9 +77,9 @@ require('packer').startup(function(use)
           map('n', '<leader>hp', gs.preview_hunk)
           map('n', '<leader>hb', function() gs.blame_line{full=true} end)
           map('n', '<leader>tb', gs.toggle_current_line_blame)
-          map('n', '<leader>hd', gs.diffthis)
-          map('n', '<leader>hD', function() gs.diffthis('~') end)
-          map('n', '<leader>td', gs.toggle_deleted)
+          -- map('n', '<leader>hd', gs.diffthis)
+          -- map('n', '<leader>hD', function() gs.diffthis('~') end)
+          -- map('n', '<leader>td', gs.toggle_deleted)
 
           -- Text object
           map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
@@ -306,6 +306,8 @@ require('packer').startup(function(use)
         end
       }
 
+      use 'jubnzv/virtual-types.nvim'
+
       use 'mfussenegger/nvim-dap'
       use {
         'theHamsta/nvim-dap-virtual-text',
@@ -438,6 +440,7 @@ lspconfig.sumneko_lua.setup {
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
