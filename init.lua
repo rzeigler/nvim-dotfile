@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'savq/melange-nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   use 'godlygeek/tabular'
 
@@ -340,7 +340,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme melange')
+vim.cmd('colorscheme catppuccin-frappe')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
