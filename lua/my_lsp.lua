@@ -24,7 +24,7 @@ M.on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
-  require'virtualtypes'.on_attach(client, bufnr)
+  -- require'virtualtypes'.on_attach(client, bufnr)
 end
 
 return M
