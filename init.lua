@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'savq/melange-nvim'
+  use 'ellisonleao/gruvbox.nvim'
 
   use 'godlygeek/tabular'
 
@@ -102,6 +102,9 @@ require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     config = function()
       require'lualine'.setup {
+        optioncs = {
+          theme = 'gruvbox'
+        },
         sections = {
           lualine_c = {
             {
@@ -340,7 +343,7 @@ vim.g.mapleader = ','
 
 vim.o.background='dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme melange')
+vim.cmd('colorscheme gruvbox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
@@ -385,7 +388,7 @@ vim.keymap.set('n', '<space>bt', require'dap'.toggle_breakpoint, opts)
 vim.keymap.set('n', '<space>bc', require'dap'.clear_breakpoints, opts)
 vim.keymap.set('n', '<space>dc', require'dap'.continue, opts)
 vim.keymap.set('n', '<space>dt', require'dap'.terminate, opts)
-vim.keymap.set('n', '<space>dl', require'dap'.run_last, opts)
+vim.keymap.set('n', '<space>dp', require'dap'.run_last, opts)
 vim.keymap.set('n', '<space>dr', require'dap'.repl.toggle, opts)
 vim.keymap.set('n', '<space>sf', require'dap'.step_over, opts)
 vim.keymap.set('n', '<space>si', require'dap'.step_into, opts)
