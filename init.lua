@@ -317,6 +317,8 @@ require('packer').startup(function(use)
     end
   }
 
+  use 'jubnzv/virtual-types.nvim'
+
   use 'mfussenegger/nvim-dap'
   use {
     'theHamsta/nvim-dap-virtual-text',
