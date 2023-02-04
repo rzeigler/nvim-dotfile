@@ -2,6 +2,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'lifepillar/vim-solarized8'
+  use 'sainnhe/everforest'
 
   use 'godlygeek/tabular'
 
@@ -47,14 +48,14 @@ require('packer').startup(function(use)
           end
 
           -- Navigation
-          map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
+          map('n', ']h', function()
+            if vim.wo.diff then return ']h' end
             vim.schedule(function() gs.next_hunk() end)
             return '<Ignore>'
           end, { expr = true })
 
-          map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
+          map('n', '[h', function()
+            if vim.wo.diff then return '[h' end
             vim.schedule(function() gs.prev_hunk() end)
             return '<Ignore>'
           end, { expr = true })
@@ -101,8 +102,8 @@ require('packer').startup(function(use)
     config = function()
       local navic = require'nvim-navic'
       require 'lualine'.setup {
-        optioncs = {
-          theme = 'solarized'
+        options = {
+          theme = 'everforest'
         },
         sections = {
           lualine_c = {
@@ -353,12 +354,18 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme solarized8')
+vim.cmd('colorscheme everforest')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
-
 vim.cmd('set completeopt=menu,menuone,noselect')
+vim.cmd('syntax off')
 
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldlevel = 10
+
+-- Workaround for https://github.com/nvim-treesitter/nvim-treesitter/issues/1337#issuecomment-1397639999 
+vim.api.nvim_create_autocmd({ "BufEnter" }, { pattern = { "*" }, command = "normal zx", })
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>cf', '<cmd>FidgetClose<cr>', opts)
