@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'ellisonleao/gruvbox.nvim'
+  use 'lifepillar/vim-solarized8'
 
   use 'godlygeek/tabular'
 
@@ -102,7 +102,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         optioncs = {
-          theme = 'gruvbox'
+          theme = 'solarized'
         },
         sections = {
           lualine_c = {
@@ -351,7 +351,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme solarized8')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 
