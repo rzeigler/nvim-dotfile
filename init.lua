@@ -1,19 +1,9 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'lifepillar/vim-solarized8'
-  use 'sainnhe/everforest'
+  use 'sainnhe/edge'
 
   use 'godlygeek/tabular'
-
-  use {
-    'SidOfc/carbon.nvim',
-    config = function()
-      require'carbon'.setup({
-        keep_netrw = false
-      })
-    end
-  }
 
   use {
     'tversteeg/registers.nvim',
@@ -112,7 +102,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'everforest'
+          theme = 'edge'
         },
         sections = {
           lualine_c = {
@@ -136,10 +126,6 @@ require('packer').startup(function(use)
       }
     end
   }
-
-  use 'RRethy/nvim-treesitter-textsubjects'
-
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
 
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -183,10 +169,30 @@ require('packer').startup(function(use)
   }
 
   use {
+    'nvim-treesitter/nvim-treesitter-context',
+    requires = 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require'treesitter-context'.setup {
+        enable = false
+      }
+    end
+  }
+
+  use 'RRethy/nvim-treesitter-textsubjects'
+
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+
+  use {
     'nvim-telescope/telescope.nvim', tag = "0.1.0",
     requires = { { 'nvim-lua/plenary.nvim' } },
     config = function()
       require 'telescope'.setup {}
+    end
+  }
+  use {
+    'nvim-telescope/telescope-file-browser.nvim',
+    config = function()
+      require'telescope'.load_extension('file_browser')
     end
   }
   use {
@@ -363,7 +369,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme everforest')
+vim.cmd('colorscheme edge')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
@@ -401,6 +407,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
 vim.keymap.set('n', '<leader>fs', builtin.symbols, opts)
+vim.keymap.set('n', '<leader>bf', require'telescope'.extensions.file_browser.file_browser, opts)
 
 
 -- Diagnostics
