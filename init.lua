@@ -7,6 +7,15 @@ require('packer').startup(function(use)
   use 'godlygeek/tabular'
 
   use {
+    'SidOfc/carbon.nvim',
+    config = function()
+      require'carbon'.setup({
+        keep_netrw = false
+      })
+    end
+  }
+
+  use {
     'tversteeg/registers.nvim',
     config = function()
       require('registers').setup({})
