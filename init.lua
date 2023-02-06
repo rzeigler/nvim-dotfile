@@ -395,7 +395,7 @@ end)
 vim.g.mapleader = ','
 
 vim.g.material_style='oceanic'
-vim.o.background = 'dark'
+vim.o.background = 'light'
 vim.cmd('set termguicolors')
 vim.cmd('colorscheme zenbones')
 vim.cmd('set number')
