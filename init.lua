@@ -3,6 +3,8 @@ require('packer').startup(function(use)
 
   use 'sainnhe/edge'
 
+  use 'nvim-tree/nvim-web-devicons'
+
   use 'godlygeek/tabular'
 
   use {
