@@ -192,7 +192,10 @@ require('packer').startup(function(use)
           'lsp',
           'treesitter'
         },
-        delay = 400
+        delay = 400,
+        filetypes_denylist = {
+          'gitcommit'
+        }
       })
     end
   }
