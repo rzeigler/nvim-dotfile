@@ -1,16 +1,25 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'marko-cerovac/material.nvim'
+  use {
+    'mcchrish/zenbones.nvim',
+    requires = 'rktjmp/lush.nvim'
+  }
 
   use 'nvim-tree/nvim-web-devicons'
-
+  
   use 'godlygeek/tabular'
 
   use {
-    'tversteeg/registers.nvim',
+    "folke/which-key.nvim",
     config = function()
-      require('registers').setup({})
+      vim.o.timeout = true
+      vim.o.timeoutlen = 1000
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
     end
   }
 
@@ -102,7 +111,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'material'
+          theme = 'zenbones'
         },
         sections = {
           lualine_c = {
@@ -388,7 +397,7 @@ vim.g.mapleader = ','
 vim.g.material_style='oceanic'
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme material')
+vim.cmd('colorscheme zenbones')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
