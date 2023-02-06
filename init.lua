@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'sainnhe/gruvbox-material'
+  use 'marko-cerovac/material.nvim'
 
   use 'nvim-tree/nvim-web-devicons'
 
@@ -102,7 +102,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'gruvbox-material'
+          theme = 'material'
         },
         sections = {
           lualine_c = {
@@ -385,9 +385,10 @@ end)
 
 vim.g.mapleader = ','
 
+vim.g.material_style='oceanic'
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme gruvbox-material')
+vim.cmd('colorscheme material')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
