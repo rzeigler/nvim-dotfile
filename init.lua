@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'sainnhe/everforest'
+  use 'ellisonleao/gruvbox.nvim'
 
   use 'godlygeek/tabular'
 
@@ -102,7 +102,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'everforest'
+          theme = 'gruvbox'
         },
         sections = {
           lualine_c = {
@@ -147,10 +147,12 @@ require('packer').startup(function(use)
               -- You can use the capture groups defined in textobjects.scm
               ["af"] = "@function.outer",
               ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
+              ["at"] = "@class.outer",
               -- You can optionally set descriptions to the mappings (used in the desc parameter of
               -- nvim_buf_set_keymap) which plugins like which-key display
-              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+              ["it"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+              ["ac"] = "@comment.outer",
+              ["ic"] = "@comment.inner"
             }
           }
         },
@@ -181,6 +183,19 @@ require('packer').startup(function(use)
   use 'RRethy/nvim-treesitter-textsubjects'
 
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+
+  use {
+    'RRethy/vim-illuminate',
+    config = function()
+      require('illuminate').configure({
+        providers = {
+          'lsp',
+          'treesitter'
+        },
+        delay = 400
+      })
+    end
+  }
 
   use {
     'nvim-telescope/telescope.nvim', tag = "0.1.0",
@@ -369,7 +384,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme everforest')
+vim.cmd('colorscheme gruvbox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
@@ -377,7 +392,7 @@ vim.cmd('syntax off')
 
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.o.foldlevel = 10
+vim.o.foldlevel = 99
 
 -- Workaround for https://github.com/nvim-treesitter/nvim-treesitter/issues/1337#issuecomment-1397639999 
 vim.api.nvim_create_autocmd({ "BufEnter" }, { pattern = { "*" }, command = "normal zx", })
