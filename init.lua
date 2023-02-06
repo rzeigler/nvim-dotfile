@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'sainnhe/edge'
+  use 'sainnhe/gruvbox-material'
 
   use 'nvim-tree/nvim-web-devicons'
 
@@ -102,7 +102,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'edge'
+          theme = 'gruvbox-material'
         },
         sections = {
           lualine_c = {
@@ -387,7 +387,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme edge')
+vim.cmd('colorscheme gruvbox-material')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
