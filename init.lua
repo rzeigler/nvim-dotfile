@@ -1,10 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use {
-    'mcchrish/zenbones.nvim',
-    requires = 'rktjmp/lush.nvim'
-  }
+  use 'sainnhe/everforest'
 
   use 'nvim-tree/nvim-web-devicons'
   
@@ -111,7 +108,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'zenbones'
+          theme = 'everforest'
         },
         sections = {
           lualine_c = {
@@ -394,10 +391,9 @@ end)
 
 vim.g.mapleader = ','
 
-vim.g.material_style='oceanic'
-vim.o.background = 'light'
+vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme zenbones')
+vim.cmd('colorscheme everforest')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
