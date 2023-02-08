@@ -4,9 +4,10 @@ vim.g.loaded_netrwPlugin = 1
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'EdenEast/nightfox.nvim'
+  use 'rebelot/kanagawa.nvim'
 
   use 'nvim-tree/nvim-web-devicons'
+
   use {
     'nvim-tree/nvim-tree.lua',
     config = function()
@@ -117,7 +118,7 @@ require('packer').startup(function(use)
       -- local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'nightfox'
+          theme = 'kanagawa'
         },
         sections = {
           lualine_c = {
@@ -402,7 +403,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme nightfox')
+vim.cmd('colorscheme kanagawa')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
@@ -445,8 +446,6 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
 vim.keymap.set('n', '<leader>fs', builtin.symbols, opts)
-vim.keymap.set('n', '<leader>bf', require'telescope'.extensions.file_browser.file_browser, opts)
-
 
 -- Diagnostics
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
