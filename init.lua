@@ -1,10 +1,10 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'sainnhe/everforest'
+  use 'https://github.com/marko-cerovac/material.nvim'
 
   use 'nvim-tree/nvim-web-devicons'
-  
+
   use 'godlygeek/tabular'
 
   use {
@@ -105,10 +105,10 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     config = function()
-      -- local navic = require'nvim-navic'
+      local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'everforest'
+          theme = 'material'
         },
         sections = {
           lualine_c = {
@@ -120,15 +120,15 @@ require('packer').startup(function(use)
             }
           }
         },
-        -- winbar = {
-        --   lualine_c = {
-        --     'filename',
-        --     {
-        --       navic.get_location,
-        --       cond = navic.is_available
-        --     }
-        --   }
-        -- }
+        winbar = {
+          lualine_c = {
+            'filename',
+            {
+              navic.get_location,
+              cond = navic.is_available
+            }
+          }
+        }
       }
     end
   }
@@ -393,7 +393,8 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme everforest')
+vim.g.material_style = 'oceanic'
+vim.cmd('colorscheme material')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
