@@ -181,7 +181,7 @@ require('packer').startup(function(use)
     requires = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require'treesitter-context'.setup {
-        enable = false
+        enable = true
       }
     end
   }
