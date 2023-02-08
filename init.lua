@@ -1,9 +1,18 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'folke/tokyonight.nvim'
+  use 'EdenEast/nightfox.nvim'
 
   use 'nvim-tree/nvim-web-devicons'
+  use {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require('nvim-tree').setup {}
+    end
+  }
 
   use 'godlygeek/tabular'
 
@@ -108,7 +117,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'tokyonight'
+          theme = 'nightfox'
         },
         sections = {
           lualine_c = {
@@ -393,7 +402,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.cmd('colorscheme tokyonight-moon')
+vim.cmd('colorscheme nightfox')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
@@ -407,6 +416,11 @@ vim.o.foldlevel = 99
 vim.api.nvim_create_autocmd({ "BufEnter" }, { pattern = { "*" }, command = "normal zx", })
 
 local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<leader>tt', '<cmd>NvimTreeToggle<cr>', opts)
+vim.keymap.set('n', '<leader>tg', '<cmd>NvimTreeFocus<cr>', opts)
+vim.keymap.set('n', '<leader>tf', '<cmd>NvimTreeFindFile<cr>', opts)
+vim.keymap.set('n', '<leader>tc', '<cmd>NvimTreeCollapse<cr>', opts)
+
 vim.keymap.set('n', '<leader>cf', '<cmd>FidgetClose<cr>', opts)
 vim.keymap.set('n', '<leader>hx', '<cmd>nohl<CR>', opts)
 vim.keymap.set('n', '<leader>qx', '<cmd>cclose<CR>', opts)
