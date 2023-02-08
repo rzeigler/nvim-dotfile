@@ -40,6 +40,7 @@ local config = {
       my_lsp.on_attach(client, bufnr)
       vim.keymap.set('n', '<A-o>', require'jdtls'.organize_imports, bufopts)
       jdtls.setup_dap({})
+      require('jdtls.setup').add_commands()
     end,
     capabilities = capabilities,
     init_options = {

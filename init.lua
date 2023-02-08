@@ -105,7 +105,7 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     config = function()
-      local navic = require'nvim-navic'
+      -- local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
           theme = 'everforest'
@@ -120,15 +120,15 @@ require('packer').startup(function(use)
             }
           }
         },
-        winbar = {
-          lualine_c = {
-            'filename',
-            {
-              navic.get_location,
-              cond = navic.is_available
-            }
-          }
-        }
+        -- winbar = {
+        --   lualine_c = {
+        --     'filename',
+        --     {
+        --       navic.get_location,
+        --       cond = navic.is_available
+        --     }
+        --   }
+        -- }
       }
     end
   }
