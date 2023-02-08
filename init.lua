@@ -1,7 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'https://github.com/marko-cerovac/material.nvim'
+  use 'folke/tokyonight.nvim'
 
   use 'nvim-tree/nvim-web-devicons'
 
@@ -108,7 +108,7 @@ require('packer').startup(function(use)
       local navic = require'nvim-navic'
       require 'lualine'.setup {
         options = {
-          theme = 'material'
+          theme = 'tokyonight'
         },
         sections = {
           lualine_c = {
@@ -393,8 +393,7 @@ vim.g.mapleader = ','
 
 vim.o.background = 'dark'
 vim.cmd('set termguicolors')
-vim.g.material_style = 'oceanic'
-vim.cmd('colorscheme material')
+vim.cmd('colorscheme tokyonight-moon')
 vim.cmd('set number')
 vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
