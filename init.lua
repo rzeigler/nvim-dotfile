@@ -9,6 +9,13 @@ require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
 
   use {
+    'j-hui/fidget.nvim',
+    config = function ()
+      require'fidget'.setup {}
+    end
+  }
+
+  use {
     'nvim-tree/nvim-tree.lua',
     config = function()
       require('nvim-tree').setup {}
@@ -397,7 +404,7 @@ vim.o.background = 'dark'
 vim.cmd('set termguicolors')
 vim.cmd('colorscheme kanagawa')
 vim.cmd('set number')
-vim.cmd('set expandtab shiftwidth=2 tabstop=2')
+vim.cmd('set expandtab shiftwidth=4 tabstop=4')
 vim.cmd('set completeopt=menu,menuone,noselect')
 vim.cmd('syntax off')
 
@@ -443,7 +450,9 @@ vim.keymap.set('n', '<leader>fs', builtin.symbols, opts)
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<space>l', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setqflist, opts)
+
 
 
 vim.keymap.set('n', '<space>bt', require 'dap'.toggle_breakpoint, opts)
