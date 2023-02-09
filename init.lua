@@ -115,13 +115,14 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     config = function()
-      -- local navic = require'nvim-navic'
+      local dap = require'dap'
       require 'lualine'.setup {
         options = {
           theme = 'kanagawa'
         },
         sections = {
           lualine_c = {
+            dap.status,
             {
               'filename',
               file_status = true,
@@ -129,16 +130,7 @@ require('packer').startup(function(use)
               path = 1,
             }
           }
-        },
-        -- winbar = {
-        --   lualine_c = {
-        --     'filename',
-        --     {
-        --       navic.get_location,
-        --       cond = navic.is_available
-        --     }
-        --   }
-        -- }
+        }
       }
     end
   }
