@@ -9,13 +9,6 @@ require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
 
   use {
-    'j-hui/fidget.nvim',
-    config = function ()
-      require'fidget'.setup {}
-    end
-  }
-
-  use {
     'nvim-tree/nvim-tree.lua',
     config = function()
       require('nvim-tree').setup {}
@@ -404,7 +397,7 @@ vim.o.background = 'dark'
 vim.cmd('set termguicolors')
 vim.cmd('colorscheme kanagawa')
 vim.cmd('set number')
-vim.cmd('set expandtab shiftwidth=4 tabstop=4')
+vim.cmd('set expandtab shiftwidth=2 tabstop=2')
 vim.cmd('set completeopt=menu,menuone,noselect')
 vim.cmd('syntax off')
 
